@@ -1,5 +1,7 @@
 import os
 import paho.mqtt.client as paho
+import json
+from pprint import pprint
 
 mqttc = paho.Client()
 
@@ -10,6 +12,10 @@ def on_connect(self, mosq, obj, rc):
 
 def on_message(mosq, obj, msg):
     print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
+    smsg = str(msg.payload)
+    if(len(smsg) > 3):
+    	message = str(msg.payload)[2:len(smsg)-1]
+    	print(message)
 
 def on_publish(mosq, obj, mid):
     print("mid: " + str(mid))
@@ -19,6 +25,12 @@ def on_subscribe(mosq, obj, mid, granted_qos):
 
 def on_log(mosq, obj, level, string):
     print(string)
+
+def parserPost():
+	#Agregar URL del .json
+	with open('dummmy.json') as data_file:    
+	    data = json.load(data_file)
+	    return data
 
 
 # Assign event callbacks
@@ -39,7 +51,7 @@ mqttc.connect('m12.cloudmqtt.com', 12583)
 mqttc.subscribe("hello/world", 0)
 
 # Publish a message
-mqttc.publish("hello/world", "my message")
+mqttc.publish("hello/world", "s,2,b,53")
 
 # Continue the network loop, exit when an error occurs
 rc = 0

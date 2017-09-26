@@ -11,11 +11,26 @@ def on_connect(self, mosq, obj, rc):
     print("rc: " + str(rc))
 
 def on_message(mosq, obj, msg):
-    print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
+	print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
+	jsonfile = parseInput(msg)
+	print(jsonfile)
+
+def parseInput(msg):
     smsg = str(msg.payload)
     if(len(smsg) > 3):
     	message = str(msg.payload)[2:len(smsg)-1]
-    	print(message)
+    	message = message.split(',')
+    	return genJson(message)
+
+def genJson(msg):
+	data = {
+	"orden": msg[0],
+	"stateid": msg[1],
+	"robotid": msg[2],
+	"positions": msg[3]
+	}
+	return json.dumps(data)
+
 
 def on_publish(mosq, obj, mid):
     print("mid: " + str(mid))

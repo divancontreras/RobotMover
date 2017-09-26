@@ -13,6 +13,7 @@ def on_connect(self, mosq, obj, rc):
 def on_message(mosq, obj, msg):
 	print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
 	jsonfile = parseInput(msg)
+	print(jsonfile)
 
 def parseInput(msg):
     smsg = str(msg.payload)
@@ -26,7 +27,8 @@ def genJson(msg):
 	"orden": msg[0],
 	"stateid": msg[1],
 	"robotid": msg[2],
-	"positions": msg[3]}
+	"positions": msg[3]
+	}
 	return json.dumps(data)
 
 
@@ -39,12 +41,11 @@ def on_subscribe(mosq, obj, mid, granted_qos):
 def on_log(mosq, obj, level, string):
     print(string)
 
-def parseToString():
+def parserPost():
 	#Agregar URL del .json
 	with open('dummmy.json') as data_file:    
 	    data = json.load(data_file)
-	    strdata = data['orden'] + "," + data['stateid'] + "," + data['robotid'] + "," + data['positions']
-	    return strdata
+	    return data
 
 
 # Assign event callbacks

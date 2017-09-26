@@ -18,9 +18,9 @@ mqttc.publish("server/", "Server Online")
 
 app = Flask(__name__)
 
-def parseToString(data):
-    strdata = data['command'] + "," + data['stateid'] + "," + data['robotid'] + "," + data['payload']
-    return strdata
+# def parseToString(data):
+#     strdata = data['command'] + "," + data['stateid'] + "," + data['robotid'] + "," + data['payload']
+#     return strdata
 
 @app.route('/', methods = ['POST'])
 def root():
@@ -34,7 +34,7 @@ def root():
     elif(not 'payload' in content):
         return 'Missing {payload}', 500
 
-    result, mid = mqttc.publish("robot/"+content['robotid'], parseToString(content))
+    result, mid = mqttc.publish("robot/"+content['robotid'], content)
     if result == paho.MQTT_ERR_SUCCESS:
         return jsonify(content), 200
     

@@ -1,6 +1,6 @@
 {
 "orden": "m",
-"stateid": {"id":"53"},
-"robotid": {"id":"2"},
-"positions": {"21 23 24 25"}
+"stateid": "53",
+"robotid": "2",
+"positions": "21 23 24 25"
 }

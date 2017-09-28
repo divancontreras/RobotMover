@@ -13,33 +13,19 @@ def on_connect(self, mosq, obj, rc):
 
 def on_message(mosq, obj, msg):
     print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
-    r = requests.post('http://mockbin.org/bin/c67f373e-e0a3-46e1-91e3-02b9c7e9f91e?foo=bar&foo=baz', data=parseInput(msg), verify=False)
-    #req = urllib2.Request('https://requestb.in/stjgqast')
-    #req.add_header('Content-Type', 'application/json')
-    #response = urllib2.urlopen(req, parseInput(msg))   
+    jsonData =  {'dummy':'empty'}
+    try:
+        jsonData = json.load(msg.payload)
+    except:
+        print("FACK YA BITCH")
+        jsonData = json.dumps({"error" : "not a json"})
+        if '/' in str(msg.topic):
+            jsonData = json.dumps(jsonData,{"robotid": msg.topic.split('/')[1]})
+        else:
+            jsonData = json.dumps(jsonData,{"robotid" : "No robot id specified"})
+    print(jsonData)
 
-def parseInput(msg):
-    #Check that string is not empty
-    smsg = str(msg.payload)
-    # Something a b' appears on the object msg.payload, so, a condition
-    if 'b\'' in smsg :
-        message = str(msg.payload)[2:len(smsg)-1]
-        message = message.split(',')
-        return genJson(message)
-    elif len(smsg) == 0 :
-        return json.dumps('')
-    else:
-        message = smsg.split(',')
-        return genJson(message)
-
-def genJson(msg):
-    data = {
-	"orden": msg[0],
-	"stateid": msg[1],
-	"robotid": msg[2],
-	"payload": msg[3]}
-    return json.dumps(data)
-
+    r = requests.post('http://mockbin.org/bin/cbe9ce80-383d-4e34-bb69-f5fb854e36e9?foo=bar&foo=baz', data=json.dumps(jsonData), verify=False)  
 
 def on_publish(mosq, obj, mid):
     print("mid: " + str(mid))

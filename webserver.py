@@ -13,6 +13,7 @@ mqttc = paho.Client()
 # Connect
 mqttc.username_pw_set("izcgxpdo", "ueK_f21lpCto")
 mqttc.connect('m12.cloudmqtt.com', 12583)
+mqttc.loop_start()
 
 mqttc.publish("server/", "Server Online")
 

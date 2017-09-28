@@ -24,8 +24,8 @@ app = Flask(__name__)
 
 @app.route('/', methods = ['POST', 'GET'])
 def root():
-    try:
-        content = request.get_json()
+
+    content = request.get_json()
         if(not 'command' in content):
             return 'Missing {command}', 500
         elif(not 'stateid' in content):
@@ -40,5 +40,7 @@ def root():
             return jsonify(content), 200
         
         return "WIERD ERROR", 500
-    except:
-        return "NOT A JSON", 500
+    # try:
+        
+    # except:
+    #     return "NOT A JSON", 500

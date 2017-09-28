@@ -35,7 +35,7 @@ def root():
     elif(not 'payload' in content):
         return 'Missing {payload}', 500
 
-    result, mid = mqttc.publish("robot/"+content['robotid'], content)
+    result, mid = mqttc.publish("robot/"+str(content['robotid']), content)
     if result == paho.MQTT_ERR_SUCCESS:
         return jsonify(content), 200
     

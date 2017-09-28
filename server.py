@@ -25,7 +25,7 @@ def on_message(mosq, obj, msg):
             jsonData = json.dumps(jsonData,{"robotid" : "No robot id specified"})
     print(jsonData)
 
-    r = requests.post('http://mockbin.org/bin/cbe9ce80-383d-4e34-bb69-f5fb854e36e9?foo=bar&foo=baz', data=json.dumps(jsonData), verify=False)  
+    r = requests.post('"http://mockbin.org/bin/54b07d53-1953-4742-ad97-ad42fbbe7d1b?foo=bar&foo=baz"', data=json.dumps(jsonData), verify=False)  
 
 def on_publish(mosq, obj, mid):
     print("mid: " + str(mid))

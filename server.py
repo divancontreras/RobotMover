@@ -1,7 +1,6 @@
 import os
 import paho.mqtt.client as paho
 import json
-from pprint import pprint
 import requests
 
 mqttc = paho.Client()
@@ -13,11 +12,11 @@ def on_connect(self, mosq, obj, rc):
 
 def on_message(mosq, obj, msg):
     print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
-    jsonData =  {'dummy':'empty'}
+    jsonData = str(msg.payload).replace("'",'"')
+    print(str(jsonData)) 
     try:
-        jsonData = json.load(msg.payload)
+        jsonData = json.loads(str(jsonData))
     except:
-        print("FACK YA BITCH")
         jsonData = json.dumps({"error" : "not a json"})
         if '/' in str(msg.topic):
             jsonData = json.dumps(jsonData,{"robotid": msg.topic.split('/')[1]})
@@ -25,7 +24,7 @@ def on_message(mosq, obj, msg):
             jsonData = json.dumps(jsonData,{"robotid" : "No robot id specified"})
     print(jsonData)
 
-    r = requests.post('"http://mockbin.org/bin/54b07d53-1953-4742-ad97-ad42fbbe7d1b?foo=bar&foo=baz"', data=json.dumps(jsonData), verify=False)  
+    r = requests.post('http://mockbin.org/bin/54b07d53-1953-4742-ad97-ad42fbbe7d1b?foo=bar&foo=baz', data=json.dumps(jsonData), verify=False)  
 
 def on_publish(mosq, obj, mid):
     print("mid: " + str(mid))

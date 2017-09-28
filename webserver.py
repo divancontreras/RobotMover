@@ -26,8 +26,6 @@ app = Flask(__name__)
 def root():
     try:
         content = request.get_json()
-        print(content)
-        return jsonify(content), 200
         if(not 'command' in content):
             return 'Missing {command}', 500
         elif(not 'stateid' in content):

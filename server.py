@@ -13,7 +13,8 @@ def on_connect(self, mosq, obj, rc):
 def on_message(mosq, obj, msg):
     print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
     jsonData = str(msg.payload).replace("'",'"')
-    print(str(jsonData)) 
+    if 'b\'' in jsonData :
+        jsonData = jsonData[2:len(smsg)-1]
     try:
         jsonData = json.loads(jsonData)
     except:
@@ -27,6 +28,7 @@ def on_message(mosq, obj, msg):
     if not('IGNORE' in jsonData):
         r = requests.post('http://48b0a7da.ngrok.io/notify', data=jsonData, verify=False)  
         print("Se mando")
+
 
 def on_publish(mosq, obj, mid):
     print("mid: " + str(mid))

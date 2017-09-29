@@ -38,7 +38,7 @@ def root():
 
     content['ignore'] = 'ignore'
 
-    result, mid = mqttc.publish("robot/" + content['robotid'], str(content))
+    result, mid = mqttc.publish("robot/" + str(content['robotid']), str(content))
     if result == paho.MQTT_ERR_SUCCESS:
         return jsonify(content), 200
     

@@ -24,8 +24,8 @@ def on_message(mosq, obj, msg):
             jsonData = json.dumps(jsonData,{"robotid" : "No robot id specified"})
     print(jsonData)
 
-    r = requests.post('http://48b0a7ba.ngrok.io/notify', data=json.dumps(jsonData), verify=False)  
-
+    r = requests.post('http://48b0a7da.ngrok.io/notify', data=jsonData, verify=False)  
+    print("Se mando")
 def on_publish(mosq, obj, mid):
     print("mid: " + str(mid))
 

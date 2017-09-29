@@ -24,7 +24,7 @@ def on_message(mosq, obj, msg):
             jsonData = json.dumps(jsonData,{"robotid" : "No robot id specified"})
     print(jsonData)
 
-    r = requests.post('http://mockbin.org/bin/54b07d53-1953-4742-ad97-ad42fbbe7d1b?foo=bar&foo=baz', data=json.dumps(jsonData), verify=False)  
+    r = requests.post('http://48b0a7ba.ngrok.io/notify', data=json.dumps(jsonData), verify=False)  
 
 def on_publish(mosq, obj, mid):
     print("mid: " + str(mid))

@@ -17,7 +17,7 @@ def on_message(mosq, obj, msg):
         jsonData = jsonData[2:len(jsonData)-1]
     print("Este: " + jsonData)
     jsonData = json.loads(jsonData)
-    if str(msg.topic).split('/') > 0:
+    if '/' in str(msg.topic):
         jsonData['robotid'] = str(msg.topic).split('/')[1]
     else:
         jsonData['robotid'] = "not specified"

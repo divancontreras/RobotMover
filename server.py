@@ -23,7 +23,7 @@ def on_message(mosq, obj, msg):
         jsonData['robotid'] = "not specified"
     print(jsonData)
     if not('ignore' in jsonData):
-        r = requests.post('http://d29428ee.ngrok.io/notify', data=jsonData, verify=False)  
+        r = requests.post('http://388bc7c6.ngrok.io/notify', data=jsonData, verify=False)  
         print("Se mando")
 
 

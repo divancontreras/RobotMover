@@ -15,15 +15,12 @@ def on_message(mosq, obj, msg):
     jsonData = str(msg.payload).replace("'",'"')
     if 'b\'' in jsonData :
         jsonData = jsonData[2:len(smsg)-1]
-    try:
-        jsonData = json.loads(jsonData)
-    except:
-        jsonData = json.loads('{"error" : "not a json"}')
-        if '/' in str(msg.topic):
-            jsonData['robotid'] = str(msg.topic).split('/')[1]
-        else:                                                                 
-            jsonData['robotid'] = "No robot id specified"
-
+        
+    jsonData = json.loads(jsonData)
+    if str(msg.topic).split('/') > 0:
+        jsonData['robotid'] = str(msg.topic).split('/')[1]
+    else:
+        jsonData['robotid'] = "not specified"
     print(jsonData)
     if not('ignore' in jsonData):
         r = requests.post('http://48b0a7da.ngrok.io/notify', data=jsonData, verify=False)  

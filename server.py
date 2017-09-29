@@ -13,7 +13,7 @@ def on_connect(self, mosq, obj, rc):
 def on_message(mosq, obj, msg):
     print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
     jsonData = str(msg.payload).replace("'",'"')
-    if 'b\'' in jsonData :
+    if 'b\"' in jsonData :
         jsonData = jsonData[2:len(jsonData)-1]
     print("Este: " + jsonData)
     jsonData = json.loads(jsonData)

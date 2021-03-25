@@ -35,7 +35,7 @@ pylint==1.6.5
 pyserial==3.2.1
 python-dateutil==2.6.0
 pythonz-bd==1.11.4
-PyYAML==3.12
+PyYAML==5.4
 query-string==0.0.12
 request==0.0.13
 requests==2.18.4

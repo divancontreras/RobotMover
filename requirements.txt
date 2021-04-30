@@ -40,7 +40,7 @@ query-string==0.0.12
 request==0.0.13
 requests==2.18.4
 resumable-urlretrieve==0.1.5
-rsa==3.4.2
+rsa==4.7
 s3transfer==0.1.10
 setupfiles==0.0.50
 six==1.10.0
